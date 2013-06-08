@@ -1,4 +1,4 @@
-function [final,iter]=piv_poisson(dirname,itt,spc,inter,flag);
+function [final,iter]=piv_poisson(dirname,spc,inter,flag)
 %
 % PIV_POISSON - calculates velocity flactuations, mean velocity and 
 %		pressure field for the free flow outside the channel tube !!! (only)
@@ -35,13 +35,13 @@ global right dudx dvdy dudy dvdx
 ro =1;
 iter = 0;
 
-warning off
+% warning off
 
 % Check the number of inputs/outputs
 
-if nargout ~=2 | nargin ~=5
-	disp('Usage:    [final,iter] = piv_poisson(dirname,itt,spc,scale,flag)  ');
-	break;
+if nargout ~=2 || nargin ~=5
+	disp('Usage:    [final,iter] = piv_poisson(dirname,spc,scale,flag)  ');
+	return;
 end
 
 % Keep current directory, change to dirname, read all txt files
@@ -94,12 +94,12 @@ end
 	winx=(maxx-minx)/spc + 1;
 	winy=(maxy-miny)/spc + 1;
 	
-	pos = tmp1(:,1,1) + j*tmp1(:,2,1);
+	pos = tmp1(:,1,1) + 1j*tmp1(:,2,1);
 	pos = reshape(pos, winy, winx);
 	right = pos;
 	
 	
-	vel = tmp1(:,3,:) + j*tmp1(:,4,:);
+	vel = tmp1(:,3,:) + 1j*tmp1(:,4,:);
 	vel = reshape(vel,winy,winx,size(tmp1,3));
 	
 	final=cat(3,pos,vel);
@@ -114,7 +114,7 @@ end
 
 % Velocity Fluctuations matrices:
 
-[row,col,len] = size(final);
+[~,~,len] = size(final);
 
 for ind = 2:file_num+1
  	fluct = final(:,:,ind) - final(:,:,len);
@@ -141,7 +141,7 @@ final = cat(3,final,reynolds);
 for ind = file_num+3:2*file_num+2
 	turb_int_u = real(final(:,:,ind)).^2;
 	turb_int_v=imag(final(:,:,ind)).^2;
-	final = cat(3,final,turb_int_u + j*turb_int_v);
+	final = cat(3,final,turb_int_u + 1j*turb_int_v);
 end
 
 if file_num > 1
@@ -258,7 +258,7 @@ end
 
 % Pressure fluctuations, 24/08/98
 
-[rows,cols,len] = size(final);
+[~,~,len] = size(final);
 
 for ind = len-file_num:len-1
  	fluct = final(:,:,ind) - final(:,:,len);
