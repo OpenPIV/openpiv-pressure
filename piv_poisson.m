@@ -1,4 +1,4 @@
-function [final,iter] = piv_poisson(dirname,spc,inter,flag)
+function [final,iter,par] = piv_poisson(dirname,spc,inter,flag)
 %
 % PIV_POISSON - calculates velocity flactuations, mean velocity and
 %		pressure field for the free flow outside the channel tube !!! (only)
@@ -34,14 +34,15 @@ function [final,iter] = piv_poisson(dirname,spc,inter,flag)
 
 ro = 1;
 iter = 0;
+par = {}; % keep parameter names
 
 % warning off
 
 % Check the number of inputs/outputs
 
 
-if nargout ~= 2 || nargin ~= 4
-    disp('Usage:    [final,iter] = piv_poisson(dirname,spc,scale,flag)  ');
+if nargout ~= 3 || nargin ~= 4
+    disp('Usage:    [final,iter,parameters] = piv_poisson(dirname,spc,scale,flag)  ');
     return;
 end
 
@@ -125,23 +126,24 @@ vel = reshape(vel,winy,winx,size(tmp1,3));
 
 final = cat(3,pos,vel);
 
-% Concatenate matrix of average velocities:
+par{1} = 'x,y';
+for i = 2:file_num + 1
+    par{i} = 'u,v';
+end
 
-% Removed some unnecessary check, [AL, 8.6.13]
-% if file_num > 1
-    final = cat(3,final,mean(final(:,:,2:end),3));
-% else
-    % final = cat(3, final, final(:,:,end));		% in testing we put only one file
-% end
+% Concatenate matrix of average velocities:
+final = cat(3,final,mean(final(:,:,2:end),3));
 
 % Velocity Fluctuations matrices:
 
-[~,~,len] = size(final);
-
+len = size(final,3);
+% Fluctuations of velcocity:
 for ind = 2:file_num+1
     fluct = final(:,:,ind) - final(:,:,len);
     final = cat(3,final,fluct);
+    par = cat(2, par,'uf,vf');
 end
+
 
 
 % Reynolds stress, 24/08/98
@@ -157,6 +159,7 @@ else
 end
 
 final = cat(3,final,reynolds);
+par = cat(2,par,'Rs');
 
 %%%% 10-Nov-98, RMS velocity %%%%%%%%%%%
 
@@ -164,6 +167,7 @@ for ind = file_num+3:2*file_num+2
     turb_int_u = real(final(:,:,ind)).^2;
     turb_int_v=imag(final(:,:,ind)).^2;
     final = cat(3,final,turb_int_u + 1j*turb_int_v);
+    par = cat(2,par,'uf/U,vf/V');
 end
 
 if file_num > 1
@@ -174,9 +178,9 @@ else
     turb_int_avg_v = zeros(row,col);
     
 end
-final = cat(3,final,turb_int_avg_u);
-final = cat(3,final,turb_int_avg_v);
-
+final = cat(3,final,turb_int_avg_u + 1j*turb_int_avg_v);
+% final = cat(3,final,turb_int_avg_v);
+par   = cat(2,par,'mean. turb.int');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -188,22 +192,22 @@ if flag
     
     % du/dx, dv/dy, du/dy, dv/dx calculations:
     
-    dudx=zeros(row,col);
-    dudy=zeros(row,col);
-    dvdx=zeros(row,col);
-    dvdy=zeros(row,col);
+    dudx = zeros(row,col);
+    dudy = zeros(row,col);
+    dvdx = zeros(row,col);
+    dvdy = zeros(row,col);
     
     for k = 2:file_num + 1	% for all velocity matrices
         
-        u=real(final(:,:,k));
-        v=imag(final(:,:,k));
+        u = real(final(:,:,k));
+        v = imag(final(:,:,k));
         
         % boundary columns:
         
-        dudx(:,1)=(u(:,2)-u(:,1))/dx;	% forward differences
-        dvdx(:,1)=(v(:,2)-v(:,1))/dx;
-        dudx(:,col)=(u(:,col)-u(:,col-1))/dx;	% backward --//--
-        dvdx(:,col)=(v(:,col)-v(:,col-1))/dx;
+        dudx(:,1) = (u(:,2)-u(:,1))/dx;	% forward differences
+        dvdx(:,1) = (v(:,2)-v(:,1))/dx;
+        dudx(:,col) = (u(:,col)-u(:,col-1))/dx;	% backward --//--
+        dvdx(:,col) = (v(:,col)-v(:,col-1))/dx;
         
         % the rest of the columns:
         
@@ -214,16 +218,16 @@ if flag
         
         % boundary rows:
         
-        dudy(1,:)=(u(2,:)-u(1,:))/dy;	% forward differnces
-        dvdy(1,:)=(v(2,:)-v(1,:))/dy;
-        dudy(row,:)=(u(row,:)-u(row-1,:))/dy;	% backward ...
-        dvdy(row,:)=(v(row,:)-v(row-1,:))/dy;
+        dudy(1,:) = (u(2,:)-u(1,:))/dy;	% forward differnces
+        dvdy(1,:) = (v(2,:)-v(1,:))/dy;
+        dudy(row,:) = (u(row,:)-u(row-1,:))/dy;	% backward ...
+        dvdy(row,:) = (v(row,:)-v(row-1,:))/dy;
         
         % the rest of the rows
         
         for r = 2:row-1
-            dudy(r,:)=(u(r+1,:)-u(r-1,:))/2/dy;	% central ...
-            dvdy(r,:)=(v(r+1,:)-v(r-1,:))/2/dy;
+            dudy(r,:) = (u(r+1,:)-u(r-1,:))/2/dy;	% central ...
+            dvdy(r,:) = (v(r+1,:)-v(r-1,:))/2/dy;
         end
         
         %
@@ -255,9 +259,9 @@ if flag
                     P(r,c)=(P(r+1,c) + P(r-1,c) + P(r,c+1) + P(r,c-1) + ro*rhsv(r,c)*dx^2)/4;
                     P(r,c) = lamda*P(r,c) + (1-lamda)*PP(r,c);
                 end
-                % 	    r = row;		% Neuman boundary condition:
-                % 	    P(r,c)=(2*P(r-1,c)+P(r,c+1)+P(r,c-1)+ro*rhsv(r,c)*dx^2)/4;
-                % 	    P(r,c)=lamda*P(r,c)+(1-lamda)*PP(r,c);
+                    r = row;		% Neuman boundary condition:
+                	P(r,c)=(2*P(r-1,c)+P(r,c+1)+P(r,c-1)+ro*rhsv(r,c)*dx^2)/4;
+                	P(r,c)=lamda*P(r,c)+(1-lamda)*PP(r,c);
             end
             
             maxerr = max(max(abs((P-PP)./P)));
@@ -266,6 +270,8 @@ if flag
         end			% while the error larger than tolerance
         
         final = cat(3,final,P);
+        par = cat(2,par,'P');
+        
         
     end			% for all velocity matrices
     
@@ -278,6 +284,8 @@ if flag
         final = cat(3, final,final(:,:,end));		% in testing we put only one file
     end
     
+    par = cat(2,par,'Mean P');
+    
     % Pressure fluctuations, 24/08/98
     
     [~,~,len] = size(final);
@@ -285,16 +293,18 @@ if flag
     for ind = len-file_num:len-1
         fluct = final(:,:,ind) - final(:,:,len);
         final = cat(3,final,fluct);
+        par = cat(2,par,'pf');
     end
     
     press_intens = sqrt(mean(final(:,:,end-file_num+1:end).^2,3));
     final = cat(3,final,press_intens);
+    par = cat(2,par,'P int.');
     
 end			% if flag == 1
 
 outname = strtok(d(1).name,'.');
 
-save(outname,'final','iter');
+save(outname,'final','iter','par');
 
 
 % cd(wd);
