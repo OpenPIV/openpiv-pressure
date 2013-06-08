@@ -30,7 +30,7 @@ function [final,iter] = piv_poisson(dirname,spc,inter,flag)
 
 % "ro" is a density of the air in ??? units
 
-% ro = 1.293e-9;
+% ro = 1.293 e-9;
 
 ro = 1;
 iter = 0;
@@ -49,7 +49,25 @@ end
 
 % wd = cd;
 % cd(dirname);
-d = dir(fullfile(dirname,'*.txt'));
+d1 = dir(fullfile(dirname,'*.txt'));
+d2 = dir(fullfile(dirname,'*_noflt.txt'));
+d3 = dir(fullfile(dirname,'*_flt.txt'));
+
+d = d1;
+ind = false(1,length(d1));
+
+for i = 1:length(d1)
+    for j = 1:length(d2)
+        if strcmp(d1(i).name,d2(j).name), ind(i) = true; end
+    end
+    for j = 1:length(d3)
+        if strcmp(d1(i).name,d3(j).name), ind(i) = true; end
+    end
+end
+d(ind) = [];
+
+
+
 file_num = length(d);
 
 % Report the number of files, or exit with error, if no file has been found
@@ -75,7 +93,7 @@ miny = min(tmp1(:,2));
 maxy = max(tmp1(:,2));
 
 
-for ind=2:file_num
+for ind = 2:file_num
     fid = fopen(fullfile(dirname,d(ind).name),'r');
     [tmp,count] = fscanf(fid,'%f %f %f %f %f');
     fclose(fid);
@@ -103,7 +121,7 @@ right = pos;
 vel = tmp1(:,3,:) + 1j*tmp1(:,4,:);
 vel = reshape(vel,winy,winx,size(tmp1,3));
 
-final=cat(3,pos,vel);
+final = cat(3,pos,vel);
 
 % Concatenate matrix of average velocities:
 
