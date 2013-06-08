@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Estimating Pressure from PIV using OpenPIV by OpenPIV</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/OpenPIV/openpiv_pressure">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/OpenPIV/openpiv_pressure/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/OpenPIV/openpiv_pressure/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Estimating Pressure from PIV using OpenPIV</h1>
+          <p>Pressure from PIV </p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/OpenPIV">OpenPIV</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a name="pressure-from-piv" class="anchor" href="#pressure-from-piv"><span class="octicon octicon-link"></span></a>Pressure from PIV</h1>
+
+<p>Pressure from Particle Image Velocimetry (PIV) data is a sort of a dream of fluid dynamics. Since the flow is fully described 
+by the vector field of velocity (the direct result of PIV) and the scalar field of pressure (the main unknown part), if 
+we had a trustable method to extract pressure from PIV results, it would cause literally a breakthrough in many areas of 
+our life. </p>
+
+<p>Back in 1999, we suggested to use PIV data in a single plane and apply to the derivatives of velocity the Poisson 
+equation. Upon accurate boundary conditions and high quality PIV measurements it is possible to get the fluctuating (!) and 
+the mean pressure fields. </p>
+
+<h3>
+<a name="references" class="anchor" href="#references"><span class="octicon octicon-link"></span></a>References</h3>
+
+<ul>
+<li>Our original blog post: <a href="http://urapiv.wordpress.com/projects/pressure/">http://urapiv.wordpress.com/projects/pressure/</a>
+</li>
+<li>the scanned conference manuscript in this repository under /docs/ or here <a href="http://urapiv.files.wordpress.com/2006/02/PIV_99_paper_OCR.pdf">PDF</a>
+or here <a href="http://www.academia.edu/2760232/Computation_of_pressure_distribution_using_PIV_velocity_data">PDF</a>
+</li>
+<li>
+<p>If you use this code and the ideas, please cite:  </p>
+
+<p>Gurka R., Liberzon A., Hefetz D., Rubinstein D. and Shavit U., Computation of Pressure Distribution Using PIV Velocity Data, 3rd International Workshop on Particle Image Velocimetry, Santa Barbara, California, September 16-18, 1999.</p>
+</li>
+</ul>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
