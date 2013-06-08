@@ -1,73 +1,65 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Estimating Pressure from PIV using OpenPIV by OpenPIV</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><!--<![endif]--><head profile="http://gmpg.org/xfn/11"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-  </head>
-  <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/OpenPIV/openpiv_pressure">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/OpenPIV/openpiv_pressure/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/OpenPIV/openpiv_pressure/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
+<title>Pressure from PIV using OpenPIV =  OPEN SOURCE (Matlab or Python or C++) Particle Image Velocimetry (PIV)</title>
+<script src="./files/quant.js" async="" type="text/javascript">
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+function addLoadEvent(func){var oldonload=window.onload;if(typeof window.onload!='function'){window.onload=func;}else{window.onload=function(){oldonload();func();}}}
+/* ]]> */
+</script>
+<link rel="stylesheet" id="all-css-0" href="./files/saved_resource" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+var LoggedOutFollow = {"invalid_email":"Your subscription did not succeed, please try again with a valid email address."};
+/* ]]> */
+</script>
 
-    <div class="wrapper">
+		<meta name="application-name" content="OpenPIV =  OPEN SOURCE (Matlab or Python or C++) Particle Image Velocimetry (PIV)"><meta name="msapplication-window" content="width=device-width;height=device-height"><meta name="msapplication-tooltip" content="OpenPIV - an open source Matlab and Python Software for PIV analysis"><meta name="msapplication-task" content="name=Subscribe;action-uri=http://OpenPIV.wordpress.com/feed/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=http://s2.wp.com/i/favicon.ico"><meta name="title" content="Pressure from PIV | OpenPIV =  OPEN SOURCE (Matlab or Python or C++) Particle Image Velocimetry (PIV) on WordPress.com">
+<meta name="description" content="OpenPIV - an open source Matlab and Python Software for PIV analysis">
+<style id="syntaxhighlighteranchor"></style>
+<link rel="stylesheet" type="text/css" id="gravatar-card-css" href="./files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="./files/services.css"></head>
 
-      <section>
-        <div id="title">
-          <h1>Estimating Pressure from PIV using OpenPIV</h1>
-          <p>Pressure from PIV </p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/OpenPIV">OpenPIV</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
-        </div>
+<body class="page page-id-7 page-child parent-pageid-11 page-template-default highlander-enabled highlander-dark" style="">
 
-        <h1>
-<a name="pressure-from-piv" class="anchor" href="#pressure-from-piv"><span class="octicon octicon-link"></span></a>Pressure from PIV</h1>
+<div id="wrapper">
 
-<p>Pressure from Particle Image Velocimetry (PIV) data is a sort of a dream of the fluid dynamics community. Since the flow is fully described 
-by the vector field of velocity (the direct result of PIV) and the scalar field of pressure (the main unknown part), if 
-we had a trustable method to extract pressure from PIV results, it would cause literally a breakthrough in many areas of 
-our life. </p>
+	<div id="header">
+		<div id="innerheader">
+			<h1 id="blog-title"><a href="http://OpenPIV.wordpress.com/" title="OpenPIV =  OPEN SOURCE (Matlab or Python or C++) Particle Image Velocimetry (PIV)">OpenPIV =  OPEN SOURCE (Matlab or Python or C++) Particle Image Velocimetry (PIV)</a></h1>
+			<div id="blog-description">OpenPIV – an open source Matlab and Python Software for PIV analysis</div>
 
-<p>Back in 1999, we suggested to use PIV data in a single plane and apply to the derivatives of velocity the Poisson 
-equation. Upon accurate boundary conditions and high quality PIV measurements it is possible to get the fluctuating (!) and 
-the mean pressure fields. </p>
+			<div id="header-image">
+				<a href="http://OpenPIV.wordpress.com/">
+								</a>
+			</div>
 
-<h3>
-<a name="references" class="anchor" href="#references"><span class="octicon octicon-link"></span></a>References</h3>
+		</div>
+	</div><!--  #header -->
 
-<ul>
-<li>Our original blog post is replicated below, including the link to the PDF of the original conference contribution
-</li>
-<li>
-<p>If you use this code and the ideas, please cite:  </p>
+	<p class="access"><a href="http://OpenPIV.wordpress.com/projects/pressure/#content" title="Skip navigation to the content">Skip navigation</a></p>
+	<div id="globalnav">
+	<ul id="menu">
+		<li class="page_item page-item-2"><a href="http://OpenPIV.wordpress.com/about/">About</a></li>
+<li class="page_item page-item-3"><a href="http://OpenPIV.wordpress.com/license/">License</a></li>
+<li class="page_item page-item-8"><a href="http://OpenPIV.wordpress.com/download/">Download&nbsp;statement</a></li>
+<li class="page_item page-item-11 current_page_ancestor current_page_parent"><a href="http://OpenPIV.wordpress.com/projects/">Projects</a></li>
+<li class="page_item page-item-53"><a href="http://OpenPIV.wordpress.com/faq/">FAQ</a></li>
+	</ul>
+</div>
 
-<p>Gurka R., Liberzon A., Hefetz D., Rubinstein D. and Shavit U., Computation of Pressure Distribution Using PIV Velocity Data, 3rd International Workshop on Particle Image Velocimetry, Santa Barbara, California, September 16-18, 1999.</p>
-</li>
-</ul>
+	<div id="container">
+		<div id="content" class="hfeed">
 
-
-
-<h2> Computation of Pressure Distribution Using PIV Velocity Data </h2>
-
-<p align="center">[<a title="PIV_99_paper_OCR.pdf" href="./files/PIV_99_paper_OCR.pdf">PIV_99_paper_OCR.pdf</a>]</p>
+			
+				<div id="post-7" class="post-7 page type-page status-publish hentry">
+					<div class="entry-meta">
+						<h2 class="entry-title"><a href="./files/Pressure from PIV   OpenPIV = OPEN SOURCE (Matlab or Python or C++) Particle Image Velocimetry (PIV).html" rel="bookmark">Pressure from&nbsp;PIV</a></h2>
+					</div>
+					<div class="entry-content">
+					<p align="center">Computation of Pressure Distribution Using PIV Velocity Data</p>
+<p align="center">[<a title="PIV_99_paper_OCR.pdf" href="http://OpenPIV.files.wordpress.com/2006/02/PIV_99_paper_OCR.pdf">PIV_99_paper_OCR.pdf</a>]</p>
 <p align="center">Gurka, R., Liberzon, A., Hefetz, D., Rubinstein, D., and Shavit, U.</p>
 <div align="center">
 <p align="center">Agricultural Engineering, Technion, Haifa 32000, Israel (<a href="mailto:aguri@technion.ac.il">aguri[at]technion.ac.il</a>)</p>
@@ -98,11 +90,7 @@ the mean pressure fields. </p>
 <p align="left"><img src="./files/Image19.gif"></p>
 <p align="left"><strong>Fig. 3</strong>: A comparison of mean pressure calculation and measurements (Peper et al., 1997).</p>
 <p align="left">
-</p>
-
-
-<h3>References </h3>
-
+</p><p align="left"><strong>References </strong></p>
 <ul>
 <li>
 <div align="left">Peper F., Leiner W. and Fiebig M., Impinging radial and inline jets: a comparison with regrd to heat transfer, wall pressure distribution and pressure loss, Experimental Thermal and Fluid Science, 14, 194-204, 1997.</div>
@@ -115,13 +103,5 @@ the mean pressure fields. </p>
 </li>
 </ul>
 </div>
-
-
-
-      </section>
-
-    </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
-  </body>
+</body>
 </html>
