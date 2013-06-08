@@ -20,3 +20,14 @@ or here [PDF](http://www.academia.edu/2760232/Computation_of_pressure_distributi
 
 
 
+### Demo
+
+Starting from the data in the included test folders, e.g. imp_3 (imp is a shortcut for impinging jet experiment), you can get 
+a vector field like this:
+
+![Velocity field](docs/58558.jpg)
+
+and the result of the mean pressure looks like this:
+
+![Pressure field](docs/imp3_1.jpg)
+
