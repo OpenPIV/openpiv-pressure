@@ -49,9 +49,13 @@ end
 
 % wd = cd;
 % cd(dirname);
+% fullfile removes the need to change directories [AL, 8.6.13]
 d1 = dir(fullfile(dirname,'*.txt'));
 d2 = dir(fullfile(dirname,'*_noflt.txt'));
 d3 = dir(fullfile(dirname,'*_flt.txt'));
+
+% the following loops remove _flt and _noflt.txt from the list
+% of names. 
 
 d = d1;
 ind = false(1,length(d1));
@@ -105,13 +109,11 @@ end
 
 % Interrogation size, total size and step sizes initialization:
 
+dx = spc*inter;		% spc = spacing grid
+dy = spc*inter;		% dx,dy = scaled grid in X,Y directions
 
-
-dx=spc*inter;		% spc = spacing grid
-dy=spc*inter;		% dx,dy = scaled grid in X,Y directions
-
-winx=(maxx-minx)/spc + 1;
-winy=(maxy-miny)/spc + 1;
+winx = (maxx-minx)/spc + 1;
+winy = (maxy-miny)/spc + 1;
 
 pos = tmp1(:,1,1) + 1j*tmp1(:,2,1);
 pos = reshape(pos, winy, winx);
@@ -125,11 +127,12 @@ final = cat(3,pos,vel);
 
 % Concatenate matrix of average velocities:
 
-if file_num > 1
-    final = cat(3,final,mean(final(:,:,2:file_num+1),3));
-else
-    final = cat(3, final,final(:,:,2));		% in testing we put only one file
-end
+% Removed some unnecessary check, [AL, 8.6.13]
+% if file_num > 1
+    final = cat(3,final,mean(final(:,:,2:end),3));
+% else
+    % final = cat(3, final, final(:,:,end));		% in testing we put only one file
+% end
 
 % Velocity Fluctuations matrices:
 
@@ -227,20 +230,20 @@ if flag
         
         rhsv = dudx.^2+dvdy.^2+2*dudy.*dvdx;
         
-        right=cat(3,right,rhsv);
+        right = cat(3,right,rhsv);
         
         % Pressure matrix initialization with boundary conditions:
         
-        P=zeros(row,col);
+        P = zeros(row,col);
         %	P(1,:)=zeros(1,col);
         %	P(:,1)=zeros(row,1);
         %	P(:,col)=P(:,1);
         PP = P;
-        lamda = 1.8;			% weighting factor
+        lamda = 1.8; % weighting factor
         
         % Poisson equation solution by Liebmann's (iterative) method
         
-        tol = 1e-2;		% error is 1%
+        tol = 1e-3;		% error is 1%
         maxerr = inf;		% initial error
         iter = 0;
         while maxerr > tol
@@ -249,8 +252,8 @@ if flag
             disp(['Iteration no. ',num2str(iter)]);
             for c = 2:col-1
                 for r = 2:row-1
-                    P(r,c)=(P(r+1,c)+P(r-1,c)+P(r,c+1)+P(r,c-1)+ro*rhsv(r,c)*dx^2)/4;
-                    P(r,c)=lamda*P(r,c)+(1-lamda)*PP(r,c);
+                    P(r,c)=(P(r+1,c) + P(r-1,c) + P(r,c+1) + P(r,c-1) + ro*rhsv(r,c)*dx^2)/4;
+                    P(r,c) = lamda*P(r,c) + (1-lamda)*PP(r,c);
                 end
                 % 	    r = row;		% Neuman boundary condition:
                 % 	    P(r,c)=(2*P(r-1,c)+P(r,c+1)+P(r,c-1)+ro*rhsv(r,c)*dx^2)/4;
