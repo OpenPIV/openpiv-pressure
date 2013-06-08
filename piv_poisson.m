@@ -1,4 +1,4 @@
-function [final,iter]=piv_poisson(dirname,spc,inter,flag)
+function [final,iter] = piv_poisson(dirname,spc,inter,flag)
 %
 % PIV_POISSON - calculates velocity flactuations, mean velocity and
 %		pressure field for the free flow outside the channel tube !!! (only)
@@ -26,28 +26,29 @@ function [final,iter]=piv_poisson(dirname,spc,inter,flag)
 
 % Some initializations
 
-global right dudx dvdy dudy dvdx
+% global right dudx dvdy dudy dvdx
 
 % "ro" is a density of the air in ??? units
 
 % ro = 1.293e-9;
 
-ro =1;
+ro = 1;
 iter = 0;
 
 % warning off
 
 % Check the number of inputs/outputs
 
-if nargout ~=2 || nargin ~=5
+
+if nargout ~= 2 || nargin ~= 4
     disp('Usage:    [final,iter] = piv_poisson(dirname,spc,scale,flag)  ');
     return;
 end
 
 % Keep current directory, change to dirname, read all txt files
 
-wd = cd;
-cd(dirname);
+% wd = cd;
+% cd(dirname);
 d = dir(fullfile(dirname,'*.txt'));
 file_num = length(d);
 
@@ -61,7 +62,7 @@ end
 
 % Load all files and find a mininum/maximum of X and Y values
 
-fid = fopen(d(1).name,'r');
+fid = fopen(fullfile(dirname,d(1).name),'r');
 [tmp1,count] = fscanf(fid,'%f %f %f %f %f');
 fclose(fid);
 tmp1  = reshape(tmp1, 5, count/5)';
@@ -75,7 +76,7 @@ maxy = max(tmp1(:,2));
 
 
 for ind=2:file_num
-    fid = fopen(d(ind).name,'r');
+    fid = fopen(fullfile(dirname,d(ind).name),'r');
     [tmp,count] = fscanf(fid,'%f %f %f %f %f');
     fclose(fid);
     tmp  = reshape(tmp, 5, count/5)';
@@ -274,4 +275,5 @@ outname = strtok(d(1).name,'.');
 
 save(outname,'final','iter');
 
-cd(wd);
+
+% cd(wd);
