@@ -8,6 +8,33 @@ function [final,iter,par] = piv_poisson(dirname,spc,inter,flag)
 %	flag = 0 - calculate ONLY velocities, averages, fluctuations and Reynold stresses.
 %	Last modified at:10 November, 1998
 %
+% 
+% number of layers in the final 3D matrix is,
+%		5n+7
+% where n is the number of realizations.
+%
+% The values are complex to provide the x componenet
+% as real and y component as imaginary
+% 
+% 7
+% ^^^
+% 1	Location
+% 2	Mean
+% 3	Raynolds Stress
+% 4	rms in x
+% 5	rms in y
+% 6	Mean Pressure
+% 7	rms Pressure
+%  
+%  5
+%  ^^^
+%  1	Velocity
+%  2	Fluctuation
+% 3	Fluctuation Square
+% 4	Pressure
+%  5	Pressure Fluctuation
+%
+%
 % Copyright (c) 1998, Alex Liberzon & Roi Gurka, Dep. of Agr.Eng, Technion
 % A special thanks to Asaf Arnon, Dep. of Agr.Eng., Technion
 %
