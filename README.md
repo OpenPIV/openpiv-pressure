@@ -25,9 +25,9 @@ or here [PDF](http://www.academia.edu/2760232/Computation_of_pressure_distributi
 Starting from the data in the included test folders, e.g. imp_3 (imp is a shortcut for impinging jet experiment), you can get 
 a vector field like this:
 
-![Velocity field](docs/58558.jpg)
+		matlab -nodesktop -nosplash -r 'test_piv_poisson'
 
 and the result of the mean pressure looks like this:
 
-![Pressure field](docs/imp3_1.jpg)
+![Pressure field](test_piv_poisson.png)
 
