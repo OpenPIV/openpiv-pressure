@@ -248,7 +248,12 @@ if flag
         %	P(:,1)=zeros(row,1);
         %	P(:,col)=P(:,1);
         PP = P;
-        lambda = 1.8; % weighting factor
+        
+        % Automatic optimal lambda: 
+        % Ref: http://www.enm.bris.ac.uk/admin/courses/ANA&PDEs/pde-lect8.pdf
+        tmpc = cos(pi/(31+1)) + cos(pi/(30+1));
+        lambda = 4/(2+sqrt(4-tmpc^2));
+        % lambda = 1.8; % weighting factor
         
         % Poisson equation solution by Liebmann's (iterative) method
         
@@ -265,7 +270,7 @@ if flag
                     P(r,c) = lambda*P(r,c) + (1-lambda)*PP(r,c);
                 end
                     r = row;		% Neuman boundary condition:
-                	P(r,c)=(2*P(r-1,c)+P(r,c+1)+P(r,c-1)+ro*rhsv(r,c)*dx^2)/4;
+                	P(r,c)=(2*P(r-1,c)+P(r,c+1)+P(r,c-1) + ro*rhsv(r,c)*dx^2)/4;
                 	P(r,c)=lambda*P(r,c)+(1-lambda)*PP(r,c);
             end
             
