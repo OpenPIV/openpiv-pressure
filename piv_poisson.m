@@ -73,6 +73,7 @@ if nargout ~= 3 || nargin ~= 4
     return;
 end
 
+% read the list of TXT files
 d = get_list_txt_files(dirname);
 
 
