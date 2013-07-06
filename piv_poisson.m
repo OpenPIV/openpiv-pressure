@@ -248,7 +248,7 @@ if flag
         %	P(:,1)=zeros(row,1);
         %	P(:,col)=P(:,1);
         PP = P;
-        lamda = 1.8; % weighting factor
+        lambda = 1.8; % weighting factor
         
         % Poisson equation solution by Liebmann's (iterative) method
         
@@ -262,11 +262,11 @@ if flag
             for c = 2:col-1
                 for r = 2:row-1
                     P(r,c)=(P(r+1,c) + P(r-1,c) + P(r,c+1) + P(r,c-1) + ro*rhsv(r,c)*dx^2)/4;
-                    P(r,c) = lamda*P(r,c) + (1-lamda)*PP(r,c);
+                    P(r,c) = lambda*P(r,c) + (1-lambda)*PP(r,c);
                 end
                     r = row;		% Neuman boundary condition:
                 	P(r,c)=(2*P(r-1,c)+P(r,c+1)+P(r,c-1)+ro*rhsv(r,c)*dx^2)/4;
-                	P(r,c)=lamda*P(r,c)+(1-lamda)*PP(r,c);
+                	P(r,c)=lambda*P(r,c)+(1-lambda)*PP(r,c);
             end
             
             maxerr = max(max(abs((P-PP)./P)));
